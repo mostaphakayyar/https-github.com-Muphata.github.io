@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mostapha Kayyar — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #0f0e0d;
+    --paper: #f5f2ed;
+    --accent: #c84b11;
+    --accent2: #1a3a5c;
+    --muted: #7a7670;
+    --card-bg: #ffffff;
+    --border: rgba(0,0,0,0.1);
+    --tag-bg: #eae7e1;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(245,242,237,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(100px, 18vw, 220px);
+    font-weight: 800;
+    color: rgba(0,0,0,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.04em;
+  }
+  .hero-content { position: relative; max-width: 900px; }
+  .hero-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.9rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 580px;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.85rem 2rem;
+    border: none;
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    padding: 0.85rem 2rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    position: absolute;
+    right: 3rem; bottom: 4rem;
+    display: flex; gap: 3rem;
+  }
+  .stat { text-align: right; }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; line-height: 1; }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    max-width: 1100px;
+  }
+  .about-text p { color: var(--muted); font-weight: 300; line-height: 1.8; margin-bottom: 1.2rem; }
+  .about-text strong { color: var(--ink); font-weight: 500; }
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .skill-chip {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .skill-chip::before { content: '→'; color: var(--accent); font-size: 0.75rem; }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-cat {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+  .project-desc { font-size: 0.9rem; color: var(--muted); font-weight: 300; line-height: 1.65; margin-bottom: 1.5rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--muted);
+    font-size: 0.75rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+  .project-num {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: rgba(0,0,0,0.05);
+    line-height: 1;
+  }
+
+  /* EXPERIENCE */
+  .timeline { max-width: 760px; }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-date { font-size: 0.82rem; color: var(--muted); font-weight: 400; padding-top: 0.2rem; }
+  .timeline-content h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.2rem; }
+  .timeline-content .org { font-size: 0.88rem; color: var(--accent); margin-bottom: 0.6rem; font-weight: 500; }
+  .timeline-content p { font-size: 0.88rem; color: var(--muted); font-weight: 300; line-height: 1.65; }
+
+  /* CONTACT */
+  .contact-inner {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 8px;
+    padding: 5rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-inner::before {
+    content: 'HELLO';
+    position: absolute;
+    font-family: 'Syne', sans-serif;
+    font-size: 14rem;
+    font-weight: 800;
+    color: rgba(255,255,255,0.03);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .contact-inner h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .contact-inner p { color: rgba(245,242,237,0.6); font-weight: 300; margin-bottom: 2.5rem; position: relative; }
+  .btn-light {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+    position: relative;
+  }
+  .btn-light:hover { background: #fff; transform: translateY(-2px); }
+
+  footer {
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .hero-stats { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .contact-inner { padding: 3rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">MK<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg-text">DATA</div>
+  <div class="hero-content">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1>Mostapha<br><em>Kayyar</em></h1>
+    <p class="hero-sub">Logistics & Operations professional turned <strong>AI & Data Builder</strong> — bridging 13+ years of real-world supply chain expertise with Python, machine learning, and automation.</p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">View Projects →</a>
+      <a href="#contact" class="btn-outline">Let's Connect</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">13+</div>
+      <div class="stat-label">Years experience</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Published apps</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Languages</div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-label">About me</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-title">Operations mind.<br>Builder's hands.</div>
+      <p>I spent 13 years managing end-to-end logistics, fleet operations, and international supply chains across Lebanon, Mali, and beyond. Then I earned a <strong>Professional Diploma in AI & Data Science from AUB</strong> — and everything changed.</p>
+      <p>I don't just analyze data. I build tools that solve real operational problems: RAG pipelines, productivity apps on the Microsoft Store, custom ERPs, and AI chatbots. My edge is knowing exactly <strong>where the pain is</strong> in a business — and building the right solution for it.</p>
+      <p>Fluent in Arabic, English, French, and conversational Turkish. Based in Lebanon, with a global mindset shaped by living and working in West Africa.</p>
+    </div>
+    <div>
+      <div class="skills-grid">
+        <div class="skill-chip">Python & Automation</div>
+        <div class="skill-chip">AI / Machine Learning</div>
+        <div class="skill-chip">Power BI & Tableau</div>
+        <div class="skill-chip">LangChain & RAG</div>
+        <div class="skill-chip">Supply Chain Ops</div>
+        <div class="skill-chip">ERP Systems</div>
+        <div class="skill-chip">Streamlit & Gradio</div>
+        <div class="skill-chip">SQL & Data Analysis</div>
+        <div class="skill-chip">Windows App Dev</div>
+        <div class="skill-chip">Project Management</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" style="background: #f0ede7;">
+  <div class="section-label">Work</div>
+  <div class="section-title">Projects</div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-num">01</div>
+      <div class="project-cat">AI · Published App</div>
+      <div class="project-title">Privacy Filter Pro</div>
+      <p class="project-desc">Published on the Microsoft Store (May 2026). A privacy-focused productivity tool built with Python for Windows users.</p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Windows</span>
+        <span class="tag">Microsoft Store</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <div class="project-cat">Productivity · Published App</div>
+      <div class="project-title">SnipText OCR</div>
+      <p class="project-desc">Windows OCR tool published on the Microsoft Store. One-keystroke text extraction (Shift+Ctrl+X) — eliminates 6 redundant steps vs Microsoft Snipping Tool.</p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">OCR</span>
+        <span class="tag">Microsoft Store</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <div class="project-cat">AI · RAG Pipeline</div>
+      <div class="project-title">LogiGuard-AI</div>
+      <p class="project-desc">A Retrieval-Augmented Generation pipeline built with LangChain and Streamlit. Dramatically reduces document search time for logistics operations teams.</p>
+      <div class="project-tags">
+        <span class="tag">LangChain</span>
+        <span class="tag">Streamlit</span>
+        <span class="tag">RAG</span>
+        <span class="tag">Python</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">04</div>
+      <div class="project-cat">Automation · System</div>
+      <div class="project-title">POS/CRM Prototype</div>
+      <p class="project-desc">Custom POS and CRM system built with Gradio to eliminate manual data entry. Designed from hands-on experience managing FMCG retail operations.</p>
+      <div class="project-tags">
+        <span class="tag">Gradio</span>
+        <span class="tag">Python</span>
+        <span class="tag">CRM</span>
+        <span class="tag">Automation</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">05</div>
+      <div class="project-cat">AI · Chatbots</div>
+      <div class="project-title">AI Chatbots (×2)</div>
+      <p class="project-desc">Two purpose-built AI chatbots for operational use cases, leveraging modern LLM frameworks and conversational AI techniques.</p>
+      <div class="project-tags">
+        <span class="tag">LLM</span>
+        <span class="tag">Python</span>
+        <span class="tag">Conversational AI</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">06</div>
+      <div class="project-cat">Data · BI Dashboards</div>
+      <div class="project-title">Power BI & Tableau Dashboards</div>
+      <p class="project-desc">Business intelligence dashboards for supply chain, inventory, and operational performance — turning raw data into strategic decisions.</p>
+      <div class="project-tags">
+        <span class="tag">Power BI</span>
+        <span class="tag">Tableau</span>
+        <span class="tag">Supply Chain</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">07</div>
+      <div class="project-cat">Enterprise · System</div>
+      <div class="project-title">Custom ERP System</div>
+      <p class="project-desc">Built an ERP system tailored to operational needs — managing inventory, logistics, HR, and reporting in an integrated platform.</p>
+      <div class="project-tags">
+        <span class="tag">ERP</span>
+        <span class="tag">Python</span>
+        <span class="tag">Operations</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-label">Background</div>
+  <div class="section-title">Experience</div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">2021 — 2025</div>
+      <div class="timeline-content">
+        <h3>Logistics Operations Manager</h3>
+        <div class="org">Badawistore Group · Bamako, Mali</div>
+        <p>Managed end-to-end FMCG retail operations. Achieved 100% inventory accuracy, led launch of OUTLET223 store, reduced transportation costs by 80%, and coordinated with international suppliers across Indonesia, France, Turkey, and Dubai.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2012 — 2020</div>
+      <div class="timeline-content">
+        <h3>Reporting & Liaison Coordinator</h3>
+        <div class="org">Lebanese Ministry of Defense</div>
+        <p>High-level coordination between international diplomats and local command. Authored critical reports for senior leadership under strict security protocols. 8 years of advanced Excel and government data management.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2025</div>
+      <div class="timeline-content">
+        <h3>Professional Diploma — AI & Data Science</h3>
+        <div class="org">American University of Beirut (AUB)</div>
+        <p>Comprehensive program covering Python, machine learning, data visualization, and AI applications. Complemented by certifications from DataCamp, Cisco, LinkedIn Learning, and edX.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="padding-top: 2rem;">
+  <div class="contact-inner">
+    <h2>Let's build something.</h2>
+    <p>Open to data, AI, and operations roles — or just a good conversation about tech and supply chains.</p>
+    <a href="https://www.linkedin.com/in/mostapha-kayyar" class="btn-light" target="_blank">Connect on LinkedIn →</a>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 Mostapha Kayyar</div>
+  <div>Built with HTML · Free to host on GitHub Pages</div>
+</footer>
+
+</body>
+</html>
